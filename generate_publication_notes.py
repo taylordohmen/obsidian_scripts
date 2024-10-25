@@ -53,7 +53,7 @@ existing_pubs = [pub[:-3] for pub in os.listdir(PAPER_DIR)]
 publications = dblp_person.findall(CONF_PUBS) + dblp_person.findall(ARTICLES)
 
 for pub in publications:
-    title = str(pub.title)
+    title = str(pub.title).replace('/', '[slash]') # forward slashes fuck up the macos file system
     if title not in existing_pubs:
         with open(f'{PAPER_DIR}{title}.md', 'w') as md_file:
             citation = requests.get(f'{DBLP_BASE_PUB}{pub.get(KEY)}.bib').text
